@@ -4,8 +4,9 @@ import re
 import yaml
 from typing import List, Dict
 
-
-BUTTON_COUNT = 24
+MATRIX_ROW_COUNT = 4
+MATRIX_COLUMN_COUNT = 6
+MATRIX_BUTTON_COUNT = MATRIX_ROW_COUNT * MATRIX_COLUMN_COUNT
 
 
 def replace_secret_strings(text: str) -> str:
@@ -44,7 +45,7 @@ lights: List[Dict] = [
         "rgb_order": "GRB",
         "pin": "GPIO8",
         "rmt_channel": 0,
-        "num_leds": BUTTON_COUNT,
+        "num_leds": MATRIX_BUTTON_COUNT,
         "chipset": "SK6812",
         "restore_mode": "RESTORE_AND_OFF",
         "effects": [],
@@ -104,26 +105,55 @@ config: Dict = {
     },
 }
 
-for i in range(0, BUTTON_COUNT):
+matrix_keymap = [
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+]
+
+
+for i in range(0, MATRIX_BUTTON_COUNT):
+    ri = matrix_keymap[i]
+    li = ri + 1
     config["light"].append(
         {
             "platform": "partition",
-            "id": f"keypad_button_{i+1:02d}_light",
-            "name": f"Button {i+1:02d} Light",
+            "id": f"keypad_button_{li:02d}_light",
+            "name": f"Button {li:02d} Light",
             "internal": False,
-            "segments": [{"id": "ledstrip", "from": i, "to": i}],
+            "segments": [{"id": "ledstrip", "from": ri, "to": ri}],
         }
     )
 
-for binary_sensor_i in range(1, BUTTON_COUNT):
     config["binary_sensor"].append(
         {
             "platform": "matrix_keypad",
-            "id": f"keypad_button_{binary_sensor_i:02d}",
-            "name": f"Button {binary_sensor_i:02d}",
+            "id": f"keypad_button_{li:02d}",
+            "name": f"Button {li:02d}",
             "internal": False,
             "keypad_id": "keypad",
-            "key": chr(65 + binary_sensor_i - 1),
+            "key": chr(65 + i),
             "on_press": [],
             "on_click": [],
             "on_double_click": [],
