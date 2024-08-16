@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+
+import re
+import yaml
+from typing import List, Dict
+
+
+BUTTON_COUNT = 24
+
+
+def replace_secret_strings(text: str) -> str:
+    pattern = re.compile(r"__secret[ ](\w+)")
+    return pattern.sub(r"!secret \1", text)
+
+
+binary_sensors: List[Dict] = [
+    {
+        "platform": "gpio",
+        "id": "keypad_row_21",
+        "pin": {"number": "GPIO21", "allow_other_uses": True},
+    },
+    {
+        "platform": "gpio",
+        "id": "keypad_row_20",
+        "pin": {"number": "GPIO20", "allow_other_uses": True},
+    },
+    {
+        "platform": "gpio",
+        "id": "keypad_row_03",
+        "pin": {"number": "GPIO3", "allow_other_uses": True},
+    },
+    {
+        "platform": "gpio",
+        "id": "keypad_row_07",
+        "pin": {"number": "GPIO7", "allow_other_uses": True},
+    },
+]
+
+lights: List[Dict] = [
+    {
+        "platform": "esp32_rmt_led_strip",
+        "name": "Ledstrip",
+        "id": "ledstrip",
+        "rgb_order": "GRB",
+        "pin": "GPIO8",
+        "rmt_channel": 0,
+        "num_leds": BUTTON_COUNT,
+        "chipset": "SK6812",
+        "restore_mode": "RESTORE_AND_OFF",
+        "effects": [],
+    }
+]
+
+
+config: Dict = {
+    "substitutions": {
+        "name": "localdeck",
+        "friendly_name": "LocalDeck MQTT",
+    },
+    "esphome": {
+        "name": "localdeck",
+        "friendly_name": "LocalDeck MQTT",
+        "platformio_options": {"board_build.flash_mode": "dio"},
+    },
+    "esp32": {
+        "board": "esp32-c3-devkitm-1",
+        "framework": {"type": "esp-idf", "sdkconfig_options": {}},
+    },
+    "logger": {},
+    "ota": {"platform": "esphome", "password": "__secret ota_password"},
+    "api": {},
+    "wifi": {
+        "ssid": "__secret wifi_ssid",
+        "password": "__secret wifi_password",
+        "power_save_mode": "NONE",
+    },
+    "captive_portal": {},
+    "mqtt": {
+        "broker": "__secret mqtt_broker",
+        "port": "__secret mqtt_port",
+        "username": "__secret mqtt_username",
+        "password": "__secret mqtt_password",
+        "log_topic": None,
+    },
+    "light": lights,
+    "binary_sensor": binary_sensors,
+    "matrix_keypad": {
+        "id": "keypad",
+        "keys": "ABCDEFGHIJKLMNOPQRSTUVWX",
+        "rows": [
+            {"pin": {"number": "GPIO21", "allow_other_uses": True}},
+            {"pin": {"number": "GPIO20", "allow_other_uses": True}},
+            {"pin": {"number": "GPIO3", "allow_other_uses": True}},
+            {"pin": {"number": "GPIO7", "allow_other_uses": True}},
+        ],
+        "columns": [
+            {"pin": "GPIO0"},
+            {"pin": "GPIO1"},
+            {"pin": "GPIO10"},
+            {"pin": "GPIO4"},
+            {"pin": "GPIO5"},
+            {"pin": "GPIO6"},
+        ],
+    },
+}
+
+for i in range(0, BUTTON_COUNT):
+    config["light"].append(
+        {
+            "platform": "partition",
+            "id": f"keypad_button_{i+1:02d}_light",
+            "name": f"Button {i+1:02d} Light",
+            "internal": False,
+            "segments": [{"id": "ledstrip", "from": i, "to": i}],
+        }
+    )
+
+for binary_sensor_i in range(1, BUTTON_COUNT):
+    config["binary_sensor"].append(
+        {
+            "platform": "matrix_keypad",
+            "id": f"keypad_button_{binary_sensor_i:02d}",
+            "name": f"Button {binary_sensor_i:02d}",
+            "internal": False,
+            "keypad_id": "keypad",
+            "key": chr(65 + binary_sensor_i - 1),
+            "on_press": [],
+            "on_click": [],
+            "on_double_click": [],
+            "on_multi_click": [],
+        }
+    )
+
+output = yaml.dump(config)
+output = replace_secret_strings(output)
+
+print(output)

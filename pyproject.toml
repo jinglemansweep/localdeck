@@ -9,6 +9,7 @@ packages = []
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 pyyaml = "^6.0.2"
+types-pyyaml = "^6.0.12.20240808"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
