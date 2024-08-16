@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "localdeck-mqtt"
+name = "localdeck_mqtt"
 version = "0.0.1"
 description = "LocalDeck MQTT"
 authors = ["Louis King <jinglemansweep@gmail.com>"]
