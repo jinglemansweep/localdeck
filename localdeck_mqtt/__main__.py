@@ -105,52 +105,42 @@ config: Dict = {
     },
 }
 
-matrix_keymap = [
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-]
+
+def get_key_index(columns, rows, index, invert_y=False):
+    x = index % columns
+    y = index // columns
+    y_abs = rows - 1 - y if invert_y else y
+    new_index = y_abs * columns + x
+    return new_index
 
 
 for i in range(0, MATRIX_BUTTON_COUNT):
-    ri = matrix_keymap[i]
-    li = ri + 1
+
+    ledstrip_i = get_key_index(MATRIX_COLUMN_COUNT, MATRIX_ROW_COUNT, i, invert_y=False)
+    key_i = get_key_index(MATRIX_COLUMN_COUNT, MATRIX_ROW_COUNT, i, invert_y=True)
+    key_fmt = f"{key_i + 1:02d}"
+
     config["light"].append(
         {
             "platform": "partition",
-            "id": f"keypad_button_{li:02d}_light",
-            "name": f"Button {li:02d} Light",
+            "id": f"keypad_button_{key_fmt}_light",
+            "name": f"Button {key_fmt} Light",
             "internal": False,
-            "segments": [{"id": "ledstrip", "from": ri, "to": ri}],
+            "segments": [
+                {
+                    "id": "ledstrip",
+                    "from": ledstrip_i,
+                    "to": ledstrip_i,
+                }
+            ],
         }
     )
 
     config["binary_sensor"].append(
         {
             "platform": "matrix_keypad",
-            "id": f"keypad_button_{li:02d}",
-            "name": f"Button {li:02d}",
+            "id": f"keypad_button_{key_fmt}",
+            "name": f"Button {key_fmt}",
             "internal": False,
             "keypad_id": "keypad",
             "key": chr(65 + i),
