@@ -218,7 +218,6 @@ text_sensor:
   - platform: homeassistant
     id: keypad_button_23_hass_color
     entity_id: light.guest_bedroom_lights
-    attribute: rgb_color
     on_value:
       - script.execute:
           id: set_led_rgb
