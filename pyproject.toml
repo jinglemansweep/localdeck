@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "localdeck_mqtt"
+name = "localdeck_cli"
 version = "0.0.1"
-description = "LocalDeck MQTT"
+description = "LocalDeck CLI"
 authors = ["Louis King <jinglemansweep@gmail.com>"]
 readme = "README.md"
 packages = []
@@ -16,6 +16,9 @@ black = "^24.4.2"
 flake8 = "^7.0.0"
 mypy = "^1.0.0"
 pre-commit = "^3.6.0"
+
+[tool.black]
+line-length = 120
 
 [build-system]
 requires = ["poetry-core"]

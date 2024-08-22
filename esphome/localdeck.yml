@@ -86,11 +86,11 @@ esphome:
         blue: 0%
         brightness: 1.0
     - light.turn_on:
-       id: keypad_button_05_light
-       red: 50%
-       green: 50%
-       blue: 100%
-       brightness: 0.5
+        id: keypad_button_05_light
+        red: 50%
+        green: 50%
+        blue: 100%
+        brightness: 0.5
     - light.turn_on:
         id: keypad_button_06_light
         red: 50%
@@ -151,6 +151,13 @@ text_sensor:
     on_value:
       - light.control:
           id: keypad_button_02_light
+          state: !lambda return x == "on";
+  - platform: homeassistant
+    id: keypad_button_3_hass
+    entity_id: input_boolean.warning_general
+    on_value:
+      - light.control:
+          id: keypad_button_03_light
           state: !lambda return x == "on";
   - platform: homeassistant
     id: keypad_button_5_hass
@@ -224,6 +231,9 @@ text_sensor:
       - light.control:
           id: keypad_button_24_light
           state: !lambda return x == "on";
+switch:
+  - platform: restart
+    name: "Restart"
 light:
   - platform: esp32_rmt_led_strip
     name: Ledstrip
@@ -818,7 +828,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '1'
+                button: "1"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Lounge
                 type: single
@@ -830,7 +840,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '1'
+                button: "1"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Lounge
                 type: double
@@ -855,7 +865,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '2'
+                button: "2"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Portable
                 type: single
@@ -867,7 +877,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '2'
+                button: "2"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Portable
                 type: double
@@ -878,7 +888,10 @@ binary_sensor:
     keypad_id: keypad
     key: C
     on_press:
-      - light.turn_off: keypad_button_03_light
+      - homeassistant.service:
+          service: homeassistant.toggle
+          data:
+            entity_id: input_boolean.warning_general
     on_click: []
     on_double_click: []
     on_multi_click:
@@ -889,9 +902,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '3'
+                button: "3"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -901,9 +914,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '3'
+                button: "3"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_04
@@ -912,7 +925,9 @@ binary_sensor:
     keypad_id: keypad
     key: D
     on_press:
-      - light.turn_off: keypad_button_04_light
+      - script.execute:
+          id: blip_light
+          led_index: 3
     on_click: []
     on_double_click: []
     on_multi_click:
@@ -923,9 +938,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '4'
+                button: "4"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -935,9 +950,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '4'
+                button: "4"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_05
@@ -960,7 +975,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '5'
+                button: "5"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: WideBoy
                 type: single
@@ -972,7 +987,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '5'
+                button: "5"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: WideBoy
                 type: double
@@ -997,7 +1012,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '6'
+                button: "6"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Corner
                 type: single
@@ -1009,7 +1024,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '6'
+                button: "6"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Corner
                 type: double
@@ -1033,9 +1048,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '7'
+                button: "7"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1045,9 +1060,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '7'
+                button: "7"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_08
@@ -1069,9 +1084,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '8'
+                button: "8"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1081,9 +1096,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '8'
+                button: "8"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_09
@@ -1105,9 +1120,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '9'
+                button: "9"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1117,9 +1132,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '9'
+                button: "9"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_10
@@ -1141,9 +1156,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '10'
+                button: "10"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1153,9 +1168,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '10'
+                button: "10"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_11
@@ -1177,9 +1192,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '11'
+                button: "11"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1189,9 +1204,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '11'
+                button: "11"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_12
@@ -1214,9 +1229,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '12'
+                button: "12"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1226,9 +1241,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '12'
+                button: "12"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_13
@@ -1250,9 +1265,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '13'
+                button: "13"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1262,16 +1277,16 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '13'
+                button: "13"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_14
     name: Button 14
     internal: false
     keypad_id: keypad
-    key: 'N'
+    key: "N"
     on_press:
       - script.execute:
           id: blip_light
@@ -1286,9 +1301,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '14'
+                button: "14"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1298,9 +1313,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '14'
+                button: "14"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_15
@@ -1322,9 +1337,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '15'
+                button: "15"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1334,9 +1349,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '15'
+                button: "15"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_16
@@ -1358,9 +1373,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '16'
+                button: "16"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1370,9 +1385,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '16'
+                button: "16"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_17
@@ -1394,9 +1409,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '17'
+                button: "17"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1406,9 +1421,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '17'
+                button: "17"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_18
@@ -1430,9 +1445,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '18'
+                button: "18"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: single
       - timing:
           - ON for at most 1s
@@ -1442,9 +1457,9 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '18'
+                button: "18"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: ''
+                label: ""
                 type: double
   - platform: matrix_keypad
     id: keypad_button_19
@@ -1467,7 +1482,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '19'
+                button: "19"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Lounge
                 type: single
@@ -1479,7 +1494,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '19'
+                button: "19"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Lounge
                 type: double
@@ -1504,7 +1519,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '20'
+                button: "20"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Kitchen
                 type: single
@@ -1516,7 +1531,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '20'
+                button: "20"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Kitchen
                 type: double
@@ -1541,7 +1556,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '21'
+                button: "21"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Hallway
                 type: single
@@ -1553,7 +1568,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '21'
+                button: "21"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Hallway
                 type: double
@@ -1578,7 +1593,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '22'
+                button: "22"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Bathroom
                 type: single
@@ -1590,7 +1605,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '22'
+                button: "22"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Bathroom
                 type: double
@@ -1615,7 +1630,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '23'
+                button: "23"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Guestroom
                 type: single
@@ -1627,7 +1642,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '23'
+                button: "23"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Guestroom
                 type: double
@@ -1652,7 +1667,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '24'
+                button: "24"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Outside
                 type: single
@@ -1664,7 +1679,7 @@ binary_sensor:
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
-                button: '24'
+                button: "24"
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
                 label: Outside
                 type: double
@@ -1888,7 +1903,7 @@ script:
 globals:
   id: brightness
   type: float
-  initial_value: '1'
+  initial_value: "1"
   restore_value: true
 number:
   - platform: template
@@ -1897,7 +1912,7 @@ number:
       - globals.set:
           id: brightness
           value: !lambda return x;
-    max_value: '1'
-    min_value: '0'
-    step: '0.01'
+    max_value: "1"
+    min_value: "0"
+    step: "0.01"
     lambda: !lambda return id(brightness);

@@ -1,2 +1,1 @@
-# localdeck-mqtt
-LocalDeck MQTT
+# LocalDeck CLI

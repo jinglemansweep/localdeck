@@ -151,7 +151,7 @@ for i in range(0, MATRIX_BUTTON_COUNT):
         }
     )
 
-output = yaml.dump(config)
+output = yaml.dump(config, sort_keys=False)
 output = replace_secret_strings(output)
 
 print(output)
