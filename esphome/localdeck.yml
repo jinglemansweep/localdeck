@@ -918,7 +918,7 @@ binary_sensor:
               data:
                 button: '1'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Lounge
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -930,7 +930,7 @@ binary_sensor:
               data:
                 button: '1'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Lounge
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_02
@@ -955,7 +955,7 @@ binary_sensor:
               data:
                 button: '2'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Portable
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -967,7 +967,7 @@ binary_sensor:
               data:
                 button: '2'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Portable
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_03
@@ -1064,7 +1064,7 @@ binary_sensor:
               data:
                 button: '5'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: WideBoy
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1076,7 +1076,7 @@ binary_sensor:
               data:
                 button: '5'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: WideBoy
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_06
@@ -1101,7 +1101,7 @@ binary_sensor:
               data:
                 button: '6'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Corner
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1113,7 +1113,7 @@ binary_sensor:
               data:
                 button: '6'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Corner
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_07
@@ -1573,7 +1573,7 @@ binary_sensor:
               data:
                 button: '19'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Lounge
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1585,7 +1585,7 @@ binary_sensor:
               data:
                 button: '19'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Lounge
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_20
@@ -1610,7 +1610,7 @@ binary_sensor:
               data:
                 button: '20'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Kitchen
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1622,7 +1622,7 @@ binary_sensor:
               data:
                 button: '20'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Kitchen
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_21
@@ -1647,7 +1647,7 @@ binary_sensor:
               data:
                 button: '21'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Hallway
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1659,7 +1659,7 @@ binary_sensor:
               data:
                 button: '21'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Hallway
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_22
@@ -1684,7 +1684,7 @@ binary_sensor:
               data:
                 button: '22'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Bathroom
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1696,7 +1696,7 @@ binary_sensor:
               data:
                 button: '22'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Bathroom
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_23
@@ -1721,7 +1721,7 @@ binary_sensor:
               data:
                 button: '23'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Guestroom
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1733,7 +1733,7 @@ binary_sensor:
               data:
                 button: '23'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Guestroom
+                label: ''
                 type: double
   - platform: matrix_keypad
     id: keypad_button_24
@@ -1758,7 +1758,7 @@ binary_sensor:
               data:
                 button: '24'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Outside
+                label: ''
                 type: single
       - timing:
           - ON for at most 1s
@@ -1770,7 +1770,7 @@ binary_sensor:
               data:
                 button: '24'
                 ieee_address: !lambda return id(wifi_info_mac_address).state;
-                label: Outside
+                label: ''
                 type: double
 script:
   - id: blip_light
