@@ -1303,10 +1303,9 @@ binary_sensor:
     keypad_id: keypad
     key: L
     on_press:
-      - homeassistant.service:
-          service: homeassistant.toggle
-          data:
-            entity_id: input_boolean.house_manual_schedule
+      - script.execute:
+          id: blip_light
+          led_index: 11
     on_click: []
     on_double_click: []
     on_multi_click:
