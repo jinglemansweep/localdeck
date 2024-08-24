@@ -234,13 +234,6 @@ text_sensor:
           id: keypad_button_06_light
           state: !lambda return x == "on";
   - platform: homeassistant
-    id: keypad_button_7_hass
-    entity_id: input_boolean.warning_general
-    on_value:
-      - light.control:
-          id: keypad_button_07_light
-          state: !lambda return x == "on";
-  - platform: homeassistant
     id: keypad_button_11_hass
     entity_id: binary_sensor.front_door_contact_sensor_contact
     on_value:
@@ -1122,10 +1115,9 @@ binary_sensor:
     keypad_id: keypad
     key: G
     on_press:
-      - homeassistant.service:
-          service: homeassistant.toggle
-          data:
-            entity_id: input_boolean.warning_general
+      - script.execute:
+          id: blip_light
+          led_index: 6
     on_click: []
     on_double_click: []
     on_multi_click:
