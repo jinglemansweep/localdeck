@@ -972,6 +972,10 @@ binary_sensor:
       - script.execute:
           id: blip_light
           led_index: 2
+      - homeassistant.service:
+          service: script.toggle
+          data:
+            entity_id: script.action_lounge_media_volume_down
     on_click: []
     on_double_click: []
     on_multi_click:
@@ -979,6 +983,10 @@ binary_sensor:
           - ON for at most 1s
           - OFF for at least 0.5s
         then:
+          - homeassistant.service:
+              service: script.toggle
+              data:
+                entity_id: script.action_lounge_media_volume_mute
           - homeassistant.event:
               event: esphome.localdeck_button
               data:
@@ -1005,6 +1013,10 @@ binary_sensor:
     keypad_id: keypad
     key: D
     on_press:
+      - homeassistant.service:
+          service: script.toggle
+          data:
+            entity_id: script.action_lounge_media_volume_up
       - script.execute:
           id: blip_light
           led_index: 3
@@ -1223,6 +1235,10 @@ binary_sensor:
     keypad_id: keypad
     key: J
     on_press:
+      - homeassistant.service:
+          service: script.toggle
+          data:
+            entity_id: script.action_lounge_media_mute
       - script.execute:
           id: blip_light
           led_index: 9
