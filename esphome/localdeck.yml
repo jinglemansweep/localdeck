@@ -207,28 +207,28 @@ text_sensor:
       id: wifi_info_mac_address
   - platform: homeassistant
     id: keypad_button_1_hass
-    entity_id: switch.tasmota_plug_2
+    entity_id: switch.tasmota_plug_2_lounge_fans
     on_value:
       - light.control:
           id: keypad_button_01_light
           state: !lambda return x == "on";
   - platform: homeassistant
     id: keypad_button_2_hass
-    entity_id: switch.tasmota_plug_3
+    entity_id: switch.tasmota_plug_3_fan_portable
     on_value:
       - light.control:
           id: keypad_button_02_light
           state: !lambda return x == "on";
   - platform: homeassistant
     id: keypad_button_5_hass
-    entity_id: switch.tasmota_plug_4_lounge_wideboy_shelf
+    entity_id: switch.tasmota_plug_4_lounge_desk_shelf
     on_value:
       - light.control:
           id: keypad_button_05_light
           state: !lambda return x == "on";
   - platform: homeassistant
     id: keypad_button_6_hass
-    entity_id: switch.tasmota_plug_7
+    entity_id: switch.tasmota_plug_7_lounge_corner_shelf
     on_value:
       - light.control:
           id: keypad_button_06_light
@@ -321,7 +321,6 @@ light:
     id: ledstrip
     rgb_order: GRB
     pin: GPIO8
-    rmt_channel: 0
     num_leds: 24
     chipset: SK6812
     restore_mode: RESTORE_AND_OFF
@@ -898,7 +897,7 @@ binary_sensor:
       - homeassistant.service:
           service: homeassistant.toggle
           data:
-            entity_id: switch.tasmota_plug_2
+            entity_id: switch.tasmota_plug_2_lounge_fans
     on_click: []
     on_double_click: []
     on_multi_click:
@@ -935,7 +934,7 @@ binary_sensor:
       - homeassistant.service:
           service: homeassistant.toggle
           data:
-            entity_id: switch.tasmota_plug_3
+            entity_id: switch.tasmota_plug_3_fan_portable
     on_click: []
     on_double_click: []
     on_multi_click:
@@ -1056,7 +1055,7 @@ binary_sensor:
       - homeassistant.service:
           service: homeassistant.toggle
           data:
-            entity_id: switch.tasmota_plug_4_lounge_wideboy_shelf
+            entity_id: switch.tasmota_plug_4_lounge_desk_shelf
     on_click: []
     on_double_click: []
     on_multi_click:
@@ -1093,7 +1092,7 @@ binary_sensor:
       - homeassistant.service:
           service: homeassistant.toggle
           data:
-            entity_id: switch.tasmota_plug_7
+            entity_id: switch.tasmota_plug_7_lounge_corner_shelf
     on_click: []
     on_double_click: []
     on_multi_click:
